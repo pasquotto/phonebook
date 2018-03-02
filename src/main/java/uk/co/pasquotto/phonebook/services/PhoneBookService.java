@@ -5,5 +5,9 @@ import java.util.List;
 
 public interface PhoneBookService {
 
+    /**
+     * Lists all the contacts
+     * @return a list of all the contacts
+     */
     List<Contact> listAllContacts();
 }
