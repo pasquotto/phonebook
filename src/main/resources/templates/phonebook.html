@@ -4,23 +4,42 @@
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+<script src="list.js"></script>
+<script>
+    window.onload = function() {
+        var options = {
+            valueNames: ['name', 'address', 'phoneNumber']
+        };
+
+        var contactList = new List('contact-list', options);
+    };
+</script>
 <body>
 
 <h1>Phonebook</h1>
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Telephone Number</th>
-        <th>Address</th>
-    </tr>
-    <tr th:each="c : ${contacts}">
-        <td th:text="${c.name}">Name</td>
-        <td th:text="${c.phoneNumber}">phone number</td>
-        <td th:text="${c.address}">Address</td>
-    </tr>
-</table>
 
+<div id="contact-list">
+    <input class="search" placeholder="Search" />
+
+
+    <table>
+        <thead>
+            <tr>
+                <th class="sort" data-sort="name">Name</th>
+                <th class="sort" data-sort="phoneNumber">Telephone Number</th>
+                <th class="sort" data-sort="address">Address</th>
+            </tr>
+        </thead>
+        <tbody class="list">
+            <tr th:each="c : ${contacts}">
+                <td th:text="${c.name}" class="name">Name</td>
+                <td th:text="${c.phoneNumber}" class="phoneNumber">phone number</td>
+                <td th:text="${c.address}" class="address">Address</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>
