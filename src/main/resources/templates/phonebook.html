@@ -5,6 +5,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<p th:text="'Hello, ' + ${contacts} + '!'" />
+
+<h1>Phonebook</h1>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Telephone Number</th>
+        <th>Address</th>
+    </tr>
+    <tr th:each="c : ${contacts}">
+        <td th:text="${c.name}">Name</td>
+        <td th:text="${c.phoneNumber}">phone number</td>
+        <td th:text="${c.address}">Address</td>
+    </tr>
+</table>
+
+
 </body>
 </html>
