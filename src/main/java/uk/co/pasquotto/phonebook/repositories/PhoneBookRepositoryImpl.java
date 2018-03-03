@@ -10,7 +10,7 @@ import uk.co.pasquotto.phonebook.model.PhoneBook;
 import java.util.List;
 
 @Repository
-public class ContactRepositoryImpl implements ContactRepository {
+public class PhoneBookRepositoryImpl implements PhoneBookRepository {
 
     @Autowired
     private RestTemplate restTemplate;

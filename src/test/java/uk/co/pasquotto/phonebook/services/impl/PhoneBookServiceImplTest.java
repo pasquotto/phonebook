@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.co.pasquotto.phonebook.model.Contact;
-import uk.co.pasquotto.phonebook.repositories.ContactRepository;
+import uk.co.pasquotto.phonebook.repositories.PhoneBookRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 public class PhoneBookServiceImplTest {
 
     @Mock
-    private ContactRepository contactRepository;
+    private PhoneBookRepository phoneBookRepository;
 
     @InjectMocks
     private PhoneBookServiceImpl underTest;
@@ -30,7 +30,7 @@ public class PhoneBookServiceImplTest {
         contactsFromRepository.add(new Contact());
         contactsFromRepository.add(new Contact());
         contactsFromRepository.add(new Contact());
-        when(contactRepository.findAll()).thenReturn(contactsFromRepository);
+        when(phoneBookRepository.findAll()).thenReturn(contactsFromRepository);
 
         List<Contact> contacts = underTest.listAllContacts();
         assertEquals(3, contacts.size());

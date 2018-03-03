@@ -4,6 +4,6 @@ import uk.co.pasquotto.phonebook.model.Contact;
 
 import java.util.List;
 
-public interface ContactRepository {
+public interface PhoneBookRepository {
     List<Contact> findAll();
 }
