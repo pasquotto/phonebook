@@ -8,4 +8,6 @@ public interface PhoneBookRepository {
     List<Contact> findAll();
 
     void setUpDatabase();
+
+    Contact addContact(Contact contact);
 }

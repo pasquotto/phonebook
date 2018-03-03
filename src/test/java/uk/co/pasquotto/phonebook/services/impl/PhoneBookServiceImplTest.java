@@ -2,6 +2,7 @@ package uk.co.pasquotto.phonebook.services.impl;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -25,7 +27,6 @@ public class PhoneBookServiceImplTest {
 
     @Test
     public void listAllContacts() {
-
         List<Contact> contactsFromRepository = new ArrayList<>();
         contactsFromRepository.add(new Contact());
         contactsFromRepository.add(new Contact());
@@ -34,5 +35,18 @@ public class PhoneBookServiceImplTest {
 
         List<Contact> contacts = underTest.listAllContacts();
         assertEquals(3, contacts.size());
+    }
+
+    @Test
+    public void testCreateContact() {
+
+        Contact newContact = new Contact();
+        newContact.setName("ContactName");
+        newContact.setPhoneNumber("1234");
+        newContact.setAddress("Address");
+
+        underTest.addContact(newContact);
+
+        verify(phoneBookRepository).addContact(newContact);
     }
 }

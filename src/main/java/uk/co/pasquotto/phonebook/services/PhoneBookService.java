@@ -10,4 +10,6 @@ public interface PhoneBookService {
      * @return a list of all the contacts
      */
     List<Contact> listAllContacts();
+
+    void addContact(Contact contact);
 }

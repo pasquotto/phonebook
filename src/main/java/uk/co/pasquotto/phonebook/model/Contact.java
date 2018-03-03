@@ -3,9 +3,12 @@ package uk.co.pasquotto.phonebook.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.UUID;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Contact {
 
+    private UUID id;
     private String name;
     @JsonProperty("phone_number")
     private String phoneNumber;
@@ -42,5 +45,13 @@ public class Contact {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", address='" + address + '\'' +
                 '}';
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
     }
 }

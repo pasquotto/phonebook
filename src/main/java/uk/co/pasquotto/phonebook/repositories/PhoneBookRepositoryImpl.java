@@ -8,6 +8,7 @@ import uk.co.pasquotto.phonebook.model.Contact;
 import uk.co.pasquotto.phonebook.model.PhoneBook;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class PhoneBookRepositoryImpl implements PhoneBookRepository {
@@ -28,5 +29,22 @@ public class PhoneBookRepositoryImpl implements PhoneBookRepository {
     @Override
     public void setUpDatabase() {
         phoneBook = restTemplate.getForObject(url, PhoneBook.class);
+        //generating unique id's for each contact
+        phoneBook.getContacts().forEach(contact -> contact.setId(generateId()));
+    }
+
+    @Override
+    public Contact addContact(Contact contact) {
+        contact.setId(generateId());
+        phoneBook.getContacts().add(contact);
+        return contact;
+    }
+
+    private UUID generateId() {
+        return UUID.randomUUID();
+    }
+
+    protected void setPhoneBook(PhoneBook phoneBook) {
+        this.phoneBook = phoneBook;
     }
 }

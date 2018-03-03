@@ -18,6 +18,18 @@
 
 <h1>Phonebook</h1>
 
+<div id="contactView">
+
+    <!-- th:object="${selectedContact}" -->
+    <form th:action="@{/phonebook}" th:method="POST">
+        <fieldset>
+            <label for="name">Name</label><input id="name" type="text" name="name" /><br>
+            <label for="phoneNumber">Phone Number</label><input id="phoneNumber" type="text" name="phoneNumber" /><br>
+            <label for="address">Address</label><input id="address" type="text" name="address" /><br>
+            <input type="submit" value="create"/>
+        </fieldset>
+    </form>
+</div>
 
 <div id="contact-list">
     <input class="search" placeholder="Search" />

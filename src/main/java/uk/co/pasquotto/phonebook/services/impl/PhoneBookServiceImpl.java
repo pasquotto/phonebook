@@ -18,4 +18,9 @@ public class PhoneBookServiceImpl implements PhoneBookService {
     public List<Contact> listAllContacts() {
         return phoneBookRepository.findAll();
     }
+
+    @Override
+    public void addContact(Contact contact) {
+        phoneBookRepository.addContact(contact);
+    }
 }
