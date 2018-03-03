@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface PhoneBookRepository {
     List<Contact> findAll();
+
+    void setUpDatabase();
 }

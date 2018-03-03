@@ -15,12 +15,18 @@ public class PhoneBookRepositoryImpl implements PhoneBookRepository {
     @Autowired
     private RestTemplate restTemplate;
 
+    private PhoneBook phoneBook;
+
     @Value("${phonebook.repository.url}")
     private String url;
 
     @Override
     public List<Contact> findAll() {
-        PhoneBook phoneBook = restTemplate.getForObject(url, PhoneBook.class);
         return phoneBook.getContacts();
+    }
+
+    @Override
+    public void setUpDatabase() {
+        phoneBook = restTemplate.getForObject(url, PhoneBook.class);
     }
 }
