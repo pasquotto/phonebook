@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
+import static uk.co.pasquotto.phonebook.ContactUtils.createContact;
 
 public class PhoneBookRepositoryImplTest {
 
@@ -23,7 +24,7 @@ public class PhoneBookRepositoryImplTest {
         pb.getContacts().add(createContact(UUID.randomUUID(),"name1", "phone1", "address1"));
         pb.getContacts().add(createContact(UUID.randomUUID(),"name2", "phone2", "address2"));
         pb.getContacts().add(createContact(UUID.randomUUID(), "name3", "phone3", "address3"));
-        pb.getContacts().add(createContact(UUID.randomUUID(), "name4", "phone4", "address4"));
+        pb.getContacts().add(createContact(UUID.fromString("32d5099f-fa66-45c7-a6fe-2248c612430f"), "name4", "phone4", "address4"));
         underTest.setPhoneBook(pb);
     }
 
@@ -40,13 +41,31 @@ public class PhoneBookRepositoryImplTest {
         assertNotNull(addedContact);
         assertNotNull(addedContact.getId());
     }
+    @Test
+    public void getContact() {
+        UUID uuid = UUID.fromString("32d5099f-fa66-45c7-a6fe-2248c612430f");
+        Contact contactById = underTest.getContactById(uuid);
+        assertNotNull(contactById);
+    }
 
-    private Contact createContact(UUID id, String name, String phone, String address) {
-        Contact contact = new Contact();
-        contact.setId(id);
-        contact.setName(name);
-        contact.setPhoneNumber(phone);
-        contact.setAddress(address);
-        return contact;
+    @Test
+    public void getContactThatDoesNotExists() {
+        UUID uuid = UUID.randomUUID();
+        Contact contactById = underTest.getContactById(uuid);
+        assertNull(contactById);
+    }
+
+    @Test
+    public void updateContact() {
+        UUID uuid = UUID.fromString("32d5099f-fa66-45c7-a6fe-2248c612430f");
+        Contact contactToBeChanged = createContact(uuid, "changedName", "changedName", "changedAddress");
+        underTest.updateContact(contactToBeChanged);
+
+        Contact retrievedContact = underTest.getContactById(uuid);
+
+        assertEquals(contactToBeChanged.getId(), retrievedContact.getId());
+        assertEquals(contactToBeChanged.getName(), retrievedContact.getName());
+        assertEquals(contactToBeChanged.getPhoneNumber(), retrievedContact.getPhoneNumber());
+        assertEquals(contactToBeChanged.getAddress(), retrievedContact.getAddress());
     }
 }

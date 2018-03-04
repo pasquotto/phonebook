@@ -13,4 +13,6 @@ public interface PhoneBookRepository {
     Contact addContact(Contact contact);
 
     Contact getContactById(UUID contactId);
+
+    void updateContact(Contact contact);
 }

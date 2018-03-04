@@ -36,4 +36,12 @@ public class PhoneBookServiceImpl implements PhoneBookService {
 
         return contact;
     }
+
+    @Override
+    public void updateContact(UUID contactId, Contact contact) {
+        if (phoneBookRepository.getContactById(contactId) == null) {
+            throw new RuntimeException("Contact not found");
+        }
+        phoneBookRepository.updateContact(contact);
+    }
 }

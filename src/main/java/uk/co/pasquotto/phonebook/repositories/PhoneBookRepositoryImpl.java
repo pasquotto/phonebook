@@ -50,8 +50,19 @@ public class PhoneBookRepositoryImpl implements PhoneBookRepository {
 
     @Override
     public Contact getContactById(UUID contactId) {
-
         return contactsById.get(contactId);
+    }
+
+    @Override
+    public void updateContact(Contact contact) {
+        Contact oldContact = contactsById.get(contact.getId());
+        if (oldContact != null) {
+            phoneBook.getContacts().remove(oldContact);
+            phoneBook.getContacts().add(contact);
+            contactsById.put(contact.getId(), contact);
+        } else {
+            throw new RuntimeException("contact not found");
+        }
     }
 
     private UUID generateId() {
@@ -60,5 +71,7 @@ public class PhoneBookRepositoryImpl implements PhoneBookRepository {
 
     protected void setPhoneBook(PhoneBook phoneBook) {
         this.phoneBook = phoneBook;
+        contactsById = new HashMap<>(phoneBook.getContacts().size());
+        phoneBook.getContacts().forEach(contact -> contactsById.put(contact.getId(), contact));
     }
 }

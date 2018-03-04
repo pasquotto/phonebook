@@ -4,7 +4,7 @@
     <title>Phone Book</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-<script src="list.js"></script>
+<script th:src="@{/list.js}"></script>
 <script>
     window.onload = function() {
         var options = {
@@ -22,15 +22,27 @@
 
 <h1>Phonebook</h1>
 
-<div id="contactView" th:object="${selectedContact}">
+<button onclick="document.getElementById('createContact').style.display = 'block'">Create contact</button>
 
-    <!-- th:object="${selectedContact}" -->
+<div id="createContact" style="display: none">
     <form th:action="@{/phonebook}" th:method="POST">
+        <fieldset>
+            <label for="name">Name</label><input id="name" type="text" name="name" /><br>
+            <label for="phoneNumber">Phone Number</label><input id="phoneNumber" type="text" name="phoneNumber" /><br>
+            <label for="address">Address</label><input id="address" type="text" name="address" /><br>
+            <input type="submit" value="Create"/>
+        </fieldset>
+    </form>
+</div>
+
+
+<div id="editContact" th:object="${selectedContact}" th:if="${selectedContact != null && selectedContact.id != null}">
+    <form th:action="@{/phonebook/contacts/{id}(id=*{id})}" th:method="PUT">
         <fieldset>
             <label for="name">Name</label><input id="name" type="text" name="name" th:field="*{name}"  /><br>
             <label for="phoneNumber">Phone Number</label><input id="phoneNumber" type="text" name="phoneNumber" th:field="*{phoneNumber}" /><br>
             <label for="address">Address</label><input id="address" type="text" name="address" th:field="*{address}"/><br>
-            <input type="submit" value="create"/>
+            <input type="submit" value="Update"/>
         </fieldset>
     </form>
 </div>

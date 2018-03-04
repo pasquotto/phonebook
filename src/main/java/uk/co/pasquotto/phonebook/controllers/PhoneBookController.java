@@ -42,4 +42,9 @@ public class PhoneBookController {
         return listContacts(model);
     }
 
+    @PutMapping("/phonebook/contacts/{id}")
+    public String updateContact(@PathVariable("id") UUID contactId, @ModelAttribute Contact contact, Model model) {
+        phoneBookService.updateContact(contactId, contact);
+        return listContacts(model);
+    }
 }

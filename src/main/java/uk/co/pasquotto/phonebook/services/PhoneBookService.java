@@ -15,4 +15,6 @@ public interface PhoneBookService {
     void addContact(Contact contact);
 
     Contact getContactById(UUID contactId);
+
+    void updateContact(UUID contactId, Contact contact);
 }
