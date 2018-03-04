@@ -59,7 +59,7 @@ public class PhoneBookServiceImplTest {
         assertEquals(contactFromRepository.getId(), retrievedContact.getId());
     }
 
-    @Test(expected = ContactNotFound.class)
+    @Test(expected = ContactNotFoundException.class)
     public void testGetContactNotfound() {
         UUID id = UUID.randomUUID();
         when(phoneBookRepository.getContactById(id)).thenReturn(null);
@@ -75,7 +75,7 @@ public class PhoneBookServiceImplTest {
         verify(phoneBookRepository).updateContact(contactToUpdate);
     }
 
-    @Test(expected = ContactNotFound.class)
+    @Test(expected = ContactNotFoundException.class)
     public void testUpdateContactThatDoesNotExists() {
         UUID uuid = UUID.randomUUID();
         when(phoneBookRepository.getContactById(uuid)).thenReturn(null);
@@ -91,7 +91,7 @@ public class PhoneBookServiceImplTest {
         verify(phoneBookRepository).deleteContact(contactFromRepository);
     }
 
-    @Test(expected = ContactNotFound.class)
+    @Test(expected = ContactNotFoundException.class)
     public void testDeleteContactDoesNotExists() {
         UUID uuid = UUID.randomUUID();
         when(phoneBookRepository.getContactById(uuid)).thenReturn(null);

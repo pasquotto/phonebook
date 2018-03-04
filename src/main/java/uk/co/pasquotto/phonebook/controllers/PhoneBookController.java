@@ -1,12 +1,14 @@
 package uk.co.pasquotto.phonebook.controllers;
 
+import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
+
 import uk.co.pasquotto.phonebook.model.Contact;
 import uk.co.pasquotto.phonebook.services.PhoneBookService;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -40,8 +42,19 @@ public class PhoneBookController {
 
     @PostMapping("/phonebook")
     public String createContact(@ModelAttribute Contact contact, Model model) {
+        validateContact(contact);
         phoneBookService.addContact(contact);
         return listContacts(model);
+    }
+
+    private void validateContact(@ModelAttribute Contact contact) {
+        validateFieldNotNull(contact.getName(), "Name");
+        validateFieldNotNull(contact.getPhoneNumber(), "Phone number");
+        validateFieldNotNull(contact.getAddress(), "Address");
+    }
+
+    private void validateFieldNotNull(String obj, String fieldName) {
+        Validate.notBlank(obj, fieldName + " cannot be blank");
     }
 
     @GetMapping("/phonebook/contacts/{id}")
@@ -53,6 +66,7 @@ public class PhoneBookController {
 
     @PutMapping("/phonebook/contacts/{id}")
     public String updateContact(@PathVariable("id") UUID contactId, @ModelAttribute Contact contact, Model model) {
+        validateContact(contact);
         phoneBookService.updateContact(contactId, contact);
         return listContacts(model);
     }

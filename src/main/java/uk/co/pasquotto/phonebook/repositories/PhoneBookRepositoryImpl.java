@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 import uk.co.pasquotto.phonebook.model.Contact;
 import uk.co.pasquotto.phonebook.model.PhoneBook;
-import uk.co.pasquotto.phonebook.services.impl.ContactNotFound;
+import uk.co.pasquotto.phonebook.services.impl.ContactNotFoundException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +63,7 @@ public class PhoneBookRepositoryImpl implements PhoneBookRepository {
             phoneBook.getContacts().add(contact);
             contactsById.put(contact.getId(), contact);
         } else {
-            throw new ContactNotFound(contact.getId().toString());
+            throw new ContactNotFoundException(contact.getId().toString());
         }
     }
 

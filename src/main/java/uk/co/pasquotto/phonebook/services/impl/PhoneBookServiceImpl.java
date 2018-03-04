@@ -31,7 +31,7 @@ public class PhoneBookServiceImpl implements PhoneBookService {
         Contact contact = phoneBookRepository.getContactById(contactId);
 
         if(contact == null) {
-            throw new ContactNotFound(contactId.toString());
+            throw new ContactNotFoundException(contactId.toString());
         }
 
         return contact;
@@ -40,7 +40,7 @@ public class PhoneBookServiceImpl implements PhoneBookService {
     @Override
     public void updateContact(UUID contactId, Contact contact) {
         if (phoneBookRepository.getContactById(contactId) == null) {
-            throw new ContactNotFound(contactId.toString());
+            throw new ContactNotFoundException(contactId.toString());
         }
         phoneBookRepository.updateContact(contact);
     }
@@ -50,7 +50,7 @@ public class PhoneBookServiceImpl implements PhoneBookService {
 
         Contact contact = phoneBookRepository.getContactById(contactId);
         if (contact == null) {
-            throw new ContactNotFound(contactId.toString());
+            throw new ContactNotFoundException(contactId.toString());
         }
 
         phoneBookRepository.deleteContact(contact);

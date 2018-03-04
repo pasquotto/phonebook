@@ -47,7 +47,7 @@
     </form>
 </div>
 
-<div id="contact-list">
+<div id="contact-list" th:if="${contacts != null && contacts.size() > 0}">
     <input class="search" placeholder="Search" />
 
 
@@ -74,6 +74,6 @@
         </tbody>
     </table>
 </div>
-
+<div th:if="${contacts == null || contacts.size() == 0}">No contacts yet, how about adding one or two?</div>
 </body>
 </html>
