@@ -40,6 +40,8 @@ public class PhoneBookRepositoryImplTest {
 
         assertNotNull(addedContact);
         assertNotNull(addedContact.getId());
+
+        assertNotNull(underTest.getContactById(addedContact.getId()));
     }
     @Test
     public void getContact() {

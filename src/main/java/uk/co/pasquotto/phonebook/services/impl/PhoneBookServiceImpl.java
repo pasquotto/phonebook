@@ -44,4 +44,16 @@ public class PhoneBookServiceImpl implements PhoneBookService {
         }
         phoneBookRepository.updateContact(contact);
     }
+
+    @Override
+    public void deleteContact(UUID contactId) {
+
+        Contact contact = phoneBookRepository.getContactById(contactId);
+        if (contact == null) {
+            throw new RuntimeException("Contact not found");
+        }
+
+        phoneBookRepository.deleteContact(contact);
+
+    }
 }

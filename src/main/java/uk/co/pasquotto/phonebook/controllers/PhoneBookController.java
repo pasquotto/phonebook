@@ -47,4 +47,10 @@ public class PhoneBookController {
         phoneBookService.updateContact(contactId, contact);
         return listContacts(model);
     }
+
+    @DeleteMapping("/phonebook/contacts/{id}")
+    public String deleteContact(@PathVariable("id") UUID contactId, Model model) {
+        phoneBookService.deleteContact(contactId);
+        return "redirect:/";
+    }
 }

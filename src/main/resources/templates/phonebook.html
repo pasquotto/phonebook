@@ -57,13 +57,19 @@
                 <th class="sort" data-sort="name">Name</th>
                 <th class="sort" data-sort="phoneNumber">Telephone Number</th>
                 <th class="sort" data-sort="address">Address</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody class="list">
-            <tr th:onclick="|viewContact('${c.id}')|" th:each="c : ${contacts}">
-                <td th:text="${c.name}" class="name">Name</td>
-                <td th:text="${c.phoneNumber}" class="phoneNumber">phone number</td>
-                <td th:text="${c.address}" class="address">Address</td>
+            <tr th:each="c : ${contacts}">
+                <td th:onclick="|viewContact('${c.id}')|" th:text="${c.name}" class="name">Name</td>
+                <td th:onclick="|viewContact('${c.id}')|" th:text="${c.phoneNumber}" class="phoneNumber">phone number</td>
+                <td th:onclick="|viewContact('${c.id}')|" th:text="${c.address}" class="address">Address</td>
+                <td>
+                    <form th:action="@{/phonebook/contacts/{id}(id=${c.id})}" th:method="DELETE">
+                        <input type="submit" value="Delete"/>
+                    </form>
+                </td>
             </tr>
         </tbody>
     </table>

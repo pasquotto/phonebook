@@ -83,4 +83,19 @@ public class PhoneBookServiceImplTest {
         underTest.updateContact(uuid, contactToUpdate);
     }
 
+    @Test
+    public void testDeleteContact() {
+        Contact contactFromRepository = createContact(UUID.randomUUID(), "cName", "1234", "address");
+        when(phoneBookRepository.getContactById(contactFromRepository.getId())).thenReturn(contactFromRepository);
+        underTest.deleteContact(contactFromRepository.getId());
+        verify(phoneBookRepository).deleteContact(contactFromRepository);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testDeleteContactDoesNotExists() {
+        UUID uuid = UUID.randomUUID();
+        when(phoneBookRepository.getContactById(uuid)).thenReturn(null);
+        underTest.deleteContact(uuid);
+    }
+
 }

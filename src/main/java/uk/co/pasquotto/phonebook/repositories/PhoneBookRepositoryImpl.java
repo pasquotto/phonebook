@@ -45,6 +45,7 @@ public class PhoneBookRepositoryImpl implements PhoneBookRepository {
     public Contact addContact(Contact contact) {
         contact.setId(generateId());
         phoneBook.getContacts().add(contact);
+        contactsById.put(contact.getId(), contact);
         return contact;
     }
 
@@ -63,6 +64,12 @@ public class PhoneBookRepositoryImpl implements PhoneBookRepository {
         } else {
             throw new RuntimeException("contact not found");
         }
+    }
+
+    @Override
+    public void deleteContact(Contact contact) {
+        phoneBook.getContacts().remove(contact);
+        contactsById.remove(contact.getId());
     }
 
     private UUID generateId() {
