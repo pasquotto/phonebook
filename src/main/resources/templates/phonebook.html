@@ -13,19 +13,23 @@
 
         var contactList = new List('contact-list', options);
     };
+
+    function viewContact(id) {
+        window.location= "/phonebook/contacts/" + id;
+    }
 </script>
 <body>
 
 <h1>Phonebook</h1>
 
-<div id="contactView">
+<div id="contactView" th:object="${selectedContact}">
 
     <!-- th:object="${selectedContact}" -->
     <form th:action="@{/phonebook}" th:method="POST">
         <fieldset>
-            <label for="name">Name</label><input id="name" type="text" name="name" /><br>
-            <label for="phoneNumber">Phone Number</label><input id="phoneNumber" type="text" name="phoneNumber" /><br>
-            <label for="address">Address</label><input id="address" type="text" name="address" /><br>
+            <label for="name">Name</label><input id="name" type="text" name="name" th:field="*{name}"  /><br>
+            <label for="phoneNumber">Phone Number</label><input id="phoneNumber" type="text" name="phoneNumber" th:field="*{phoneNumber}" /><br>
+            <label for="address">Address</label><input id="address" type="text" name="address" th:field="*{address}"/><br>
             <input type="submit" value="create"/>
         </fieldset>
     </form>
@@ -44,7 +48,7 @@
             </tr>
         </thead>
         <tbody class="list">
-            <tr th:each="c : ${contacts}">
+            <tr th:onclick="|viewContact('${c.id}')|" th:each="c : ${contacts}">
                 <td th:text="${c.name}" class="name">Name</td>
                 <td th:text="${c.phoneNumber}" class="phoneNumber">phone number</td>
                 <td th:text="${c.address}" class="address">Address</td>

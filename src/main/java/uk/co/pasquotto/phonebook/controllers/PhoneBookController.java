@@ -8,6 +8,7 @@ import uk.co.pasquotto.phonebook.model.Contact;
 import uk.co.pasquotto.phonebook.services.PhoneBookService;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Controller for everything related to the phonebook
@@ -22,12 +23,22 @@ public class PhoneBookController {
     public String listContacts(Model model) {
         List<Contact> contacts = phoneBookService.listAllContacts();
         model.addAttribute("contacts", contacts);
+        if (!model.containsAttribute("selectedContact")) {
+            model.addAttribute("selectedContact", new Contact());
+        }
         return "phonebook";
     }
 
     @PostMapping("/phonebook")
     public String createContact(@ModelAttribute Contact contact, Model model) {
         phoneBookService.addContact(contact);
+        return listContacts(model);
+    }
+
+    @GetMapping("/phonebook/contacts/{id}")
+    public String getContact(@PathVariable("id") UUID contactId, Model model) {
+        Contact contact = phoneBookService.getContactById(contactId);
+        model.addAttribute("selectedContact", contact);
         return listContacts(model);
     }
 

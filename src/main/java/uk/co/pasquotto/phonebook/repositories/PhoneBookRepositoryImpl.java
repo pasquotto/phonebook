@@ -7,7 +7,9 @@ import org.springframework.web.client.RestTemplate;
 import uk.co.pasquotto.phonebook.model.Contact;
 import uk.co.pasquotto.phonebook.model.PhoneBook;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Repository
@@ -17,6 +19,7 @@ public class PhoneBookRepositoryImpl implements PhoneBookRepository {
     private RestTemplate restTemplate;
 
     private PhoneBook phoneBook;
+    private Map<UUID, Contact> contactsById;
 
     @Value("${phonebook.repository.url}")
     private String url;
@@ -29,8 +32,13 @@ public class PhoneBookRepositoryImpl implements PhoneBookRepository {
     @Override
     public void setUpDatabase() {
         phoneBook = restTemplate.getForObject(url, PhoneBook.class);
+        contactsById = new HashMap<>(phoneBook.getContacts().size());
         //generating unique id's for each contact
-        phoneBook.getContacts().forEach(contact -> contact.setId(generateId()));
+        phoneBook.getContacts().forEach(contact -> {
+            contact.setId(generateId());
+            contactsById.put(contact.getId(), contact);
+        });
+
     }
 
     @Override
@@ -38,6 +46,12 @@ public class PhoneBookRepositoryImpl implements PhoneBookRepository {
         contact.setId(generateId());
         phoneBook.getContacts().add(contact);
         return contact;
+    }
+
+    @Override
+    public Contact getContactById(UUID contactId) {
+
+        return contactsById.get(contactId);
     }
 
     private UUID generateId() {

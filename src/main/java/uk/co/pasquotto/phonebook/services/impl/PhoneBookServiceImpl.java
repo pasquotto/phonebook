@@ -7,6 +7,7 @@ import uk.co.pasquotto.phonebook.repositories.PhoneBookRepository;
 import uk.co.pasquotto.phonebook.services.PhoneBookService;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PhoneBookServiceImpl implements PhoneBookService {
@@ -22,5 +23,17 @@ public class PhoneBookServiceImpl implements PhoneBookService {
     @Override
     public void addContact(Contact contact) {
         phoneBookRepository.addContact(contact);
+    }
+
+    @Override
+    public Contact getContactById(UUID contactId) {
+
+        Contact contact = phoneBookRepository.getContactById(contactId);
+
+        if(contact == null) {
+            throw new RuntimeException("contact not found");
+        }
+
+        return contact;
     }
 }
