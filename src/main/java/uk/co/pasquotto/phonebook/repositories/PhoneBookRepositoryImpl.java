@@ -1,9 +1,12 @@
 package uk.co.pasquotto.phonebook.repositories;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
+import uk.co.pasquotto.phonebook.PhonebookApplication;
 import uk.co.pasquotto.phonebook.model.Contact;
 import uk.co.pasquotto.phonebook.model.PhoneBook;
 import uk.co.pasquotto.phonebook.services.impl.ContactNotFoundException;
@@ -15,7 +18,7 @@ import java.util.UUID;
 
 @Repository
 public class PhoneBookRepositoryImpl implements PhoneBookRepository {
-
+    private static final Logger logger = LoggerFactory.getLogger(PhoneBookRepositoryImpl.class);
     @Autowired
     private RestTemplate restTemplate;
 
@@ -32,6 +35,7 @@ public class PhoneBookRepositoryImpl implements PhoneBookRepository {
 
     @Override
     public void setUpDatabase() {
+        logger.debug("Starting database setup, retrieving data from: {}", url);
         phoneBook = restTemplate.getForObject(url, PhoneBook.class);
         contactsById = new HashMap<>(phoneBook.getContacts().size());
         //generating unique id's for each contact
@@ -39,6 +43,7 @@ public class PhoneBookRepositoryImpl implements PhoneBookRepository {
             contact.setId(generateId());
             contactsById.put(contact.getId(), contact);
         });
+        logger.debug("{} Contacts where added", contactsById.size());
 
     }
 
