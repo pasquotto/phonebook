@@ -16,17 +16,26 @@ import java.util.UUID;
 @Controller
 public class PhoneBookController {
 
+    private final String MAIN_PAGE = "phonebook";
+    private final String CONTACTS = "contacts";
+    private final String SELECTED_CONTACT = "selectedContact";
+
     @Autowired
     private PhoneBookService phoneBookService;
 
     @GetMapping("/")
     public String listContacts(Model model) {
         List<Contact> contacts = phoneBookService.listAllContacts();
-        model.addAttribute("contacts", contacts);
-        if (!model.containsAttribute("selectedContact")) {
-            model.addAttribute("selectedContact", new Contact());
+        model.addAttribute(CONTACTS, contacts);
+        if (!model.containsAttribute(SELECTED_CONTACT)) {
+            model.addAttribute(SELECTED_CONTACT, new Contact());
         }
-        return "phonebook";
+        return MAIN_PAGE;
+    }
+
+    @GetMapping("/phonebook")
+    public String phoneBook(Model model) {
+        return listContacts(model);
     }
 
     @PostMapping("/phonebook")
@@ -38,7 +47,7 @@ public class PhoneBookController {
     @GetMapping("/phonebook/contacts/{id}")
     public String getContact(@PathVariable("id") UUID contactId, Model model) {
         Contact contact = phoneBookService.getContactById(contactId);
-        model.addAttribute("selectedContact", contact);
+        model.addAttribute(SELECTED_CONTACT, contact);
         return listContacts(model);
     }
 
